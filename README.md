@@ -16,7 +16,6 @@ The current codebase includes:
 - WinRAR-style private key derivation
 - WinRAR-style signature generation
 - `rarreg.key` text generation
-- optional `rarkey.rar` packaging
 
 ## Features
 
@@ -32,14 +31,12 @@ src/
 ├── main.rs       # CLI entrypoint
 ├── lib.rs        # top-level workflow
 ├── cli.rs        # command-line arguments
-├── archive.rs    # rarkey.rar packaging helper
 └── crypto.rs     # field, ECC, signing, register data generation
 ```
 
 ## Requirements
 
 - Rust toolchain
-- Optional: WinRAR or `rar.exe` in PATH for `rarkey.rar` mode
 
 ## Build
 
@@ -49,22 +46,16 @@ cargo build --release
 
 ## Usage
 
-Generate a `rarreg.key`
+Generate `rarreg.key`
 
 ```powershell
-cargo run -- --user Github --mode rarreg
+cargo run -- --user Github
 ```
 
-Generate a `rarreg.key` with explicit license type and output path
+Generate `rarreg.key` with explicit license type
 
 ```powershell
-cargo run -- --user Github --mode rarreg --type "Single PC usage license" --output .\rarreg.key
-```
-
-Generate a `rarkey.rar`
-
-```powershell
-cargo run -- --user Github --mode rarkey --type "Single PC usage license" --output .\rarkey.rar
+cargo run -- --user Github --license-name "Single PC usage license"
 ```
 
 Show CLI help
@@ -75,8 +66,7 @@ cargo run -- --help
 
 ## Notes
 
-- `rarreg` mode does not require WinRAR
-- `rarkey` mode currently shells out to `rar.exe` or `WinRAR.exe`
+- Output file name is fixed as `rarreg.key`
 - Input text is currently processed as UTF-8 bytes
 - If exact ANSI behavior is needed, only the encoding layer needs to be adjusted
 
