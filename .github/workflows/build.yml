@@ -1,0 +1,54 @@
+name: build-windows-release
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - "v*"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: windows-x64-release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Run tests
+        run: cargo test --locked
+
+      - name: Build release binary
+        run: cargo build --release --locked
+
+      - name: Package artifact
+        shell: pwsh
+        run: |
+          $packageName = "winrarkey-windows-x64"
+          $packageDir = Join-Path "dist" $packageName
+
+          New-Item -ItemType Directory -Force -Path $packageDir | Out-Null
+          Copy-Item "target/release/winrarkey.exe" $packageDir
+
+          if (Test-Path "README.md") {
+            Copy-Item "README.md" $packageDir
+          }
+
+          Compress-Archive -Path "$packageDir/*" -DestinationPath "dist/$packageName.zip" -Force
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: winrarkey-windows-x64
+          path: dist/winrarkey-windows-x64.zip
+          if-no-files-found: error
