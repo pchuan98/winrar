@@ -2,9 +2,9 @@
 
 ## 1. Composite field, curves and point G
 
-Composite field is \( GF((2^{15})^{17}) \).
+Composite field is $\( GF((2^{15})^{17}) \)$.
 
-And the base field is \( GF(2^{15}) \), i.e. each element in the domain is a `15-bit` number. The number of extensions is 17, so the entire composite domain element can be viewed as a 17-term polynomial, each term being \( GF(2^{15}) \).
+And the base field is $\( GF(2^{15}) \)$, i.e. each element in the domain is a `15-bit` number. The number of extensions is 17, so the entire composite domain element can be viewed as a 17-term polynomial, each term being $\( GF(2^{15}) \)$.
 
 The equation of the elliptic curve that WinRAR uses is
 
@@ -12,7 +12,7 @@ $$
 y^2 + xy = x^3 + x^2 + 161
 $$
 
-where \( 161 \in GF((2^{15})^{17}) \).
+where $\( 161 \in GF((2^{15})^{17}) \)$.
 
 The base point \( G \) is
 
@@ -35,7 +35,7 @@ $$
 
 ## 2. Conversion point G
 
-Convert the point \( G \) (in large integer format) into the required little-endian representation of `15-bit` segments for the field \( GF((2^{15})^{17}) \). A Python for converting the point \( G \) is as follows.
+Convert the point $\( G \)$ (in large integer format) into the required little-endian representation of `15-bit` segments for the field $\( GF((2^{15})^{17}) \)$. A Python for converting the point $\( G \)$ is as follows.
 
 ```python
 def to_field_repr(val, bits=15, count=17):
@@ -85,7 +85,7 @@ Gy = to_field([
 
 ## 3. Verify whether the Point G and PK are on the curve
 
-A Python code to verify whether the base point \( G \) and PK are on the curve is as follows.
+A Python code to verify whether the base point $\( G \)$ and PK are on the curve is as follows.
 
 ```python
 #  GF(((2^15)^17))
